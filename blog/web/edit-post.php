@@ -6,7 +6,7 @@ require_once __DIR__ . '/../src/bootstrap.php';
 
 if(isset($_GET['id']))
 {
-    $post = $entityManager->find('Blog\Entity\Post'),$_GET['id']);
+    $post = $entityManager->find('Blog\Entity\Post',$_GET['id']);
 
     if(!$post) {
         throw new \Exception('Post not found');
@@ -14,6 +14,7 @@ if(isset($_GET['id']))
 }
 
 if( 'POST' === $_SERVER['REQUEST_METHOD'] ) {
+
     if(!isset($post)) {
         $post = new Post();
         $entityManager->persist($post);
@@ -43,8 +44,19 @@ $pageTitle = isset($post) ? sprintf('Edit post #%d',$post->getId()) : 'Create a 
 <h1>
     <?=$pageTitle?>
 </h1>
-<form action="POST">
-    
+<form method="post">
+    <label>
+        Title
+        <input type="text" name="title" value="<?=isset($post) ? htmlspecialchars($post->getTitle()) : ''?>" maxlength="255" required>
+    </label><br>
+    <label>
+        Body
+        <textarea name="body" id="" cols="20" rows="10" required>
+            <?=isset($post) ? htmlspecialchars($post->getBody()) : '' ?>
+        </textarea><br>
+        <input type="submit">
+    </label>
 </form>
+<a href="index.php">Back to the index</a>
 </body>
 </html>
