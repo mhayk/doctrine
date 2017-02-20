@@ -51,7 +51,7 @@ class Post {
     /**
      * @var Comments[]
      *
-     * @OneToMany(targetEntity="Comment", mappedBy="post")
+     * @OneToMany(targetEntity="Comment", mappedBy="Post")
      */
     protected $comments;
 
@@ -63,6 +63,7 @@ class Post {
     {
         $this->comments = new ArrayCollection();
     }
+
 
     /**
      * Get id

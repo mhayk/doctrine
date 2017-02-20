@@ -12,7 +12,8 @@ use Doctrine\ORM\Mapping\ManyToOne;
  *
  * @Entity
  */
-class Comment {
+class Comment
+{
 
     /**
      * @var int
@@ -43,6 +44,7 @@ class Comment {
      * @ManyToOne(targetEntity="Post", inversedBy="comments")
      */
     protected $post;
+
     /**
      * Constructor
      */
@@ -108,32 +110,22 @@ class Comment {
     }
 
     /**
-     * Add post
+     * Set post
      *
      * @param \Blog\Entity\Post $post
      * @return Comment
      */
-    public function addPost(\Blog\Entity\Post $post)
+    public function setPost(\Blog\Entity\Post $post = null)
     {
-        $this->post[] = $post;
+        $this->post = $post;
 
         return $this;
     }
 
     /**
-     * Remove post
-     *
-     * @param \Blog\Entity\Post $post
-     */
-    public function removePost(\Blog\Entity\Post $post)
-    {
-        $this->post->removeElement($post);
-    }
-
-    /**
      * Get post
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Blog\Entity\Post 
      */
     public function getPost()
     {
