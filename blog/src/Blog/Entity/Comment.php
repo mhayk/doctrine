@@ -3,65 +3,52 @@
 namespace Blog\Entity;
 
 use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\OneToMany;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
- * Blog Post entity
  *
  * @Entity
  */
+class Comment {
 
-class Post {
     /**
      * @var int
      *
      * @Id
-     * @GeneratedValue(strategy="SEQUENCE")
+     * @GeneratedValue
      * @Column(type="integer")
      */
-    protected $id = null;
+    protected $id;
 
     /**
      * @var string
      *
-     * @Column(type="text")
-     */
-    protected $title;
-
-    /**
-     * @var string
-     *
-     * @Column(type="text")
+     * @Column(type="string")
      */
     protected $body;
 
     /**
-     * @var \Datetime
+     * @var \DateTime
      *
-     * @Column(type="datetime");
+     * @Column(type="datetime")
      */
     protected $publicationDate;
 
     /**
-     * @var Comments[]
+     * @var Post
      *
-     * @OneToMany(targetEntity="Comment", mappedBy="post")
+     * @ManyToOne(targetEntity="Post", inversedBy="comments")
      */
-    protected $comments;
-
+    protected $post;
     /**
-     * Post constructor.
-     * Initializes collections
+     * Constructor
      */
     public function __construct()
     {
-        $this->comments = new ArrayCollection();
+        $this->post = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -75,33 +62,10 @@ class Post {
     }
 
     /**
-     * Set title
-     *
-     * @param string $title
-     * @return Post
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string 
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
      * Set body
      *
      * @param string $body
-     * @return Post
+     * @return Comment
      */
     public function setBody($body)
     {
@@ -124,7 +88,7 @@ class Post {
      * Set publicationDate
      *
      * @param \DateTime $publicationDate
-     * @return Post
+     * @return Comment
      */
     public function setPublicationDate($publicationDate)
     {
@@ -144,35 +108,35 @@ class Post {
     }
 
     /**
-     * Add comments
+     * Add post
      *
-     * @param \Blog\Entity\Comment $comments
-     * @return Post
+     * @param \Blog\Entity\Post $post
+     * @return Comment
      */
-    public function addComment(\Blog\Entity\Comment $comments)
+    public function addPost(\Blog\Entity\Post $post)
     {
-        $this->comments[] = $comments;
+        $this->post[] = $post;
 
         return $this;
     }
 
     /**
-     * Remove comments
+     * Remove post
      *
-     * @param \Blog\Entity\Comment $comments
+     * @param \Blog\Entity\Post $post
      */
-    public function removeComment(\Blog\Entity\Comment $comments)
+    public function removePost(\Blog\Entity\Post $post)
     {
-        $this->comments->removeElement($comments);
+        $this->post->removeElement($post);
     }
 
     /**
-     * Get comments
+     * Get post
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getComments()
+    public function getPost()
     {
-        return $this->comments;
+        return $this->post;
     }
 }
