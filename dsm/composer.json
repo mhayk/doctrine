@@ -1,0 +1,13 @@
+{
+	"name":	"dsm",
+	"type": "project",
+	"description": "DSM - Data Smart Manager",
+
+	"require": {
+		"doctrine/orm": "2.4.*",
+		"doctrine/data-fixtures": "1.0.*"
+	},
+	"autoload": {
+		"psr-4": {"":"src/"}
+	}
+}
